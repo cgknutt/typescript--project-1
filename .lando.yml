@@ -1,0 +1,29 @@
+name: project-typescript
+recipe: lamp
+config:
+  webroot: ./public
+  xdebug: false
+
+services:
+  appserver:
+    build_as_root:
+      - curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+      - apt-get install -y nodejs
+      - npm install -g yarn
+    build:
+      - yarn install
+      - yarn build
+
+tooling:
+  yarn:
+    service: appserver
+  npm:
+    service: appserver
+  node:
+    service: appserver
+  typescript:
+    service: appserver
+    cmd: yarn tsc
+  tailwind:
+    service: appserver
+    cmd: yarn tailwindcss
